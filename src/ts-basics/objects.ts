@@ -1,0 +1,1 @@
+let employee: {readonly id: number, name: string, age: number, department: string, retire?: (date: Date) => void} = {id: 1, name: "John", age: 30, department: "IT"}
