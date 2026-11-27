@@ -1,71 +1,86 @@
-# QA Bootcamp Week 2 Starter
+## Project Overview
 
-This is the starting point for Week 2 of the QA bootcamp. During the week you will use it to practise:
+This project contains automated UI tests for the Practice Software Testing Toolshop application using Playwright and TypeScript.
 
+## Technologies Used
+
+- Playwright
 - TypeScript
-- Playwright (UI testing)
-- Postman (API testing)
-- The Toolshop REST API
-
-There are no tests in this repo. You will write them during the week.
+- Node.js
+- Git and GitHub
 
 ## Prerequisites
 
-Install these before you start:
+Before running the tests, make sure you have:
 
-- [Node.js](https://nodejs.org/) (the current LTS version)
-- [Git](https://git-scm.com/)
-- [VS Code](https://code.visualstudio.com/)
+- Node.js installed.
+- npm installed.
+- Git installed.
+- A code editor such as Visual Studio Code.
 
-## Setup
+## Installation
 
-Run these steps in order from a terminal.
+1. Clone the repository:
 
-1. Clone the repo and open the folder:
+```bash
+git clone https://github.com/Steve664/qa-bootcamp-week2-Steve.git
+```
 
-   ```bash
-   git clone <repo-url>
-   cd qa-bootcamp-week2-starter
-   ```
+2. Navigate into the project directory:
 
-2. Install the dependencies:
+```bash
+cd qa-bootcamp-week2-Steve
+```
 
-   ```bash
-   npm install
-   ```
+3. Install project dependencies:
 
-3. Install the Chromium browser for Playwright:
+```bash
+npm install
+```
 
-   ```bash
-   npx playwright install chromium
-   ```
+4. Install Playwright browsers:
 
-4. Copy `.env.example` to `.env`:
+```bash
+npx playwright install
+```
 
-   ```bash
-   cp .env.example .env
-   ```
+## Running the Tests
 
-   `.env` already contains the Toolshop website URL (`TOOLSHOP_URL`) and the Toolshop API URL (`TOOLSHOP_API_URL`). Only change them if your trainer gives you different URLs.
+Run all Playwright tests:
 
-5. Check that your setup works:
+```bash
+npx playwright test
+```
 
-   ```bash
-   npm run check
-   ```
+Run a specific test file:
 
-   This sends a GET request to the Toolshop API's `/products` endpoint (no login needed). If everything is set up correctly, it prints your Node version, the HTTP status (200), the number of products, and a last line that says `PASS`.
+```bash
+npx playwright test tests/Search-ui.spec.ts
+```
 
-> **Warning:** never commit `.env`. It is where your own settings and, later in the course, your secrets (keys, tokens, passwords) live. It is listed in `.gitignore` so Git ignores it. Do not remove it from there.
+Run a specific test with trace:
 
-## Folders
+```bash
+npx playwright test tests/Search-ui.spec.ts --trace on
+```
 
-| Folder     | What it is for |
-|------------|----------------|
-| `tests/`   | Your Playwright tests. It is empty for now; you will add tests during the week. |
-| `scripts/` | Helper scripts. `check.ts` checks your setup and is run by `npm run check`. |
+## Viewing Test Reports
 
-## Scripts
+After running the tests, generate and open the HTML report:
 
-- `npm run check`: checks your `.env` and that you can reach the Toolshop API.
-- `npm test`: runs the Playwright tests in `tests/`.
+```bash
+npx playwright show-report
+```
+
+The report provides information about passed and failed tests.
+
+## Project Structure
+
+
+- **pages/** – Contains Page Object Model classes and reusable page methods.
+- **tests/** – Contains Playwright test files.
+- **playwright.config.ts** – Contains Playwright test configuration.
+- **package.json** – Contains project dependencies and scripts.
+- **README.md** – Provides project setup and execution instructions.
+
+
