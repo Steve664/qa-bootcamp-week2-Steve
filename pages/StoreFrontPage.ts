@@ -6,7 +6,7 @@ export class StorefrontPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.productCards = page.locator('.card[href*="#/product/"]');
+    this.productCards = page.locator('a[href*="/product/"]');
   }
 
   async goto(): Promise<void> {
@@ -21,17 +21,26 @@ export class StorefrontPage {
     await searchInput.fill(productName);
      await this.page.locator('[data-test="search-submit"]').click();
   }
+searchResults(productName: string): Locator {
+  return this.productCards.filter({
+    hasText: new RegExp(productName, 'i')
+  });
+}
 
-  searchResults(): Locator {
-    return this.page.getByRole('link', { name: /pliers/i });
-    //  return this.productCards.filter({ hasText: /pliers/i });
-  }
+async getSearchResultsCount(productName: string): Promise<number> {
+  const searchResults = this.searchResults(productName);
+  return await searchResults.count();
+}
 
-  async getSearchResultsCount(): Promise<number> {
-    const searchResults = this.searchResults();
-    return await searchResults.count();
-  }
+async waitForSearchResults(productName: string): Promise<void> {
+  await expect(this.page.getByRole('heading', {
+    name: new RegExp(`Searched for: ${productName}`, 'i')
+  })).toBeVisible();
 
+  await expect(this.searchResults(productName).first()).toBeVisible();
+}
+
+  
   categoryCheckbox(categoryName: string): Locator {
     return this.page.getByRole('checkbox', { name: new RegExp(categoryName, 'i') });
   }

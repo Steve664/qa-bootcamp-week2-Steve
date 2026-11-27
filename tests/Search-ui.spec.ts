@@ -1,14 +1,18 @@
- import{ test, expect } from '@playwright/test';
- import { StorefrontPage } from '../pages/StoreFrontPage';
+import { test, expect } from '@playwright/test';
+import { StorefrontPage } from '../pages/StoreFrontPage';
 
- test('search returns results', async ({ page }) => {
-    const storefront = new StorefrontPage(page);
-    await storefront.goto();
+test('search returns results', async ({ page }) => {
+  const storefront = new StorefrontPage(page);
 
-    await storefront.searchFor('pliers');
+  await storefront.goto();
 
-    const searchResults = await storefront.getSearchResultsCount();
-    expect(searchResults).toBeGreaterThan(0);
-//        expect(searchResults).toBe(0);
+  const productName = 'pliers';
 
-  });
+  await storefront.searchFor(productName);
+
+  await storefront.waitForSearchResults(productName);
+
+  const searchResults = await storefront.getSearchResultsCount(productName);
+
+  expect(searchResults).toBeGreaterThan(0);
+});
