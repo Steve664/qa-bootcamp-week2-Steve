@@ -10,7 +10,26 @@ export class StorefrontPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('https://with-bugs.practicesoftwaretesting.com/#/');
+    await this.page.goto('https://practicesoftwaretesting.com/#/');
+  }
+  searchInput(): Locator {
+    return this.page.getByRole('textbox');
+  }
+
+  async searchFor(productName: string): Promise<void> {
+    const searchInput = this.searchInput();
+    await searchInput.fill(productName);
+     await this.page.locator('[data-test="search-submit"]').click();
+  }
+
+  searchResults(): Locator {
+    return this.page.getByRole('link', { name: /pliers/i });
+    //  return this.productCards.filter({ hasText: /pliers/i });
+  }
+
+  async getSearchResultsCount(): Promise<number> {
+    const searchResults = this.searchResults();
+    return await searchResults.count();
   }
 
   categoryCheckbox(categoryName: string): Locator {
